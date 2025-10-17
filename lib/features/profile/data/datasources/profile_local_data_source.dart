@@ -18,7 +18,7 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
     if (session == null) return null;
     
     return UserProfileModel(
-      id: 'user_${session.userName}',
+      id: session.userId,
       name: session.userName,
       email: session.email,
       lastLogin: DateTime.now(),
@@ -30,9 +30,11 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
     // En una implementación real, guardarías en SharedPreferences o similar
     // Por ahora solo actualizamos la sesión
     sessionManager.setSession(Session(
+      userId: user.id,
       token: sessionManager.currentSession.value?.token ?? '',
       userName: user.name,
       email: user.email,
+      userRole: sessionManager.currentSession.value?.userRole ?? 'student',
     ));
   }
 
